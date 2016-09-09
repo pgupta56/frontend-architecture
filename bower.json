@@ -1,0 +1,21 @@
+{
+  "name": "eventhallconfigurator",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Eric Peeters <eric.peeters@redhotminute.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "almond": "~0.3.2"
+  }
+}
