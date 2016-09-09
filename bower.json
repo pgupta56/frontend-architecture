@@ -1,10 +1,8 @@
 {
-  "name": "eventhallconfigurator",
+  "name": "frontend_build",
   "description": "",
   "main": "index.js",
-  "authors": [
-    "Eric Peeters <eric.peeters@redhotminute.com>"
-  ],
+  "authors": [],
   "license": "ISC",
   "moduleType": [],
   "homepage": "",

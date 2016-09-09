@@ -1,30 +1,50 @@
 /**
  * Settings – used with preprocessors and contain font, colors definitions, etc.
  */
+// Example with a "all.scss" file as a wrapper with our settings, since they don't actually output css.
+// Is optional, you can define individual settings here if you want to.
+// @import "settings/all";
 
 /**
  * Tools – globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
  */
+// Example for a "all.scss" file, as a wrapper for our tools, since they don't actually output css.
+// Is optional, you can define individual settings here if you want to.
+// @import "tools/all";
 
 /**
  * Generic – reset and/or normalize styles, box-sizing definition, etc. This is the first layer which generates actual CSS.
  */
+// Example for Reset.css
+// @import "generic/reset";
 
 /**
  * Elements – styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here.
+ */
+// Example: The body tag and a tags
+// @import "elements/body";
+// @import "elements/links";
 
 /**
  * Modules - Redhotminute specific modules that can be installed through the NuGet repository.
  */
+// Example for %rhm-carousel that can be extended inside a component
+// @import "modules/carousel";
 
 /**
  * Objects – class-based selectors which define undecorated design patterns, for example media object known from OOCSS
  */
+// Example for .o-container that wraps pages
+// @import "objects/container";
 
 /**
  * Components – specific UI components. This is where majority of our work takes place and our UI components are often composed of Objects and Components
  */
+// Example for .c-image-slider component in your platform
+// @import "components/image-slider";
 
 /**
  * Utilities – utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class
  */
+// Example for .u-display-none/.u-display-block, etc.
+// @import "utilities/display";
