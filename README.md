@@ -6,28 +6,20 @@
 
 ## Architecture
 
+### CSS folder
+
 ```
-|-- css [1]
+|-- /css [1]
 |  |-- settings [2]
 |  |-- tools [3]
 |  |-- generic [4]
 |  |-- elements [5]
-|  |-- modules [6]
-|  |-- objects [7]
-|  |-- components [8]
-|  |-- utilities [9]
-|  |  |-- functions [10]
-|  |  `-- mixins [11]
-|  `-- main.scss [12]
-|-- js [13]
-|  |-- base [14]
-|  |  |-- modules [15]
-|  |  `-- utils [16]
-|  |-- platform [17]
-|  |  |-- modules [18]
-|  |  `-- utils [19]
-|  |-- include.js [20]
-|  `-- require.config.js [21]
+|  |-- objects [6]
+|  |-- components [7]
+|  |-- utilities [8]
+|  |  |-- functions [9]
+|  |  `-- mixins [10]
+|  `-- main.scss [11]
 ```
 
 1. Top level CSS folder, the reason it is called CSS and not SCSS is because the technique used should not define the use case.
@@ -40,34 +32,43 @@
 
 5. ITCSS layer 4: ```elements``` - Styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here.
 
-6. New layer introduces to architecture: ```modules``` - Redhotminute specific modules that can be installed through the NuGet repository.
+6. ITCSS layer 5: ```objects``` - Class-based selectors which define undecorated design patterns, for example media object known from OOCSS.
 
-7. ITCSS layer 5: ```objects``` - Class-based selectors which define undecorated design patterns, for example media object known from OOCSS.
+7. ITCSS layer 6: ```components``` - Specific UI components. This is where majority of our work takes place and our UI components are often composed of Objects and Components.
 
-8. ITCSS layer 6: ```components``` - Specific UI components. This is where majority of our work takes place and our UI components are often composed of Objects and Components.
+8. ITCSS layer 7: ```utilities``` - Utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class.
 
-9. ITCSS layer 7: ```utilities``` - Utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class.
+9. Optional separation layer of ```utilities```, a functions folder.
 
-10. Optional separation layer of ```utilities```, a functions folder.
+10. Optional separation layer of ```utilities```, a mixins folder.
 
-11. Optional separation layer of ```utilities```, a mixins folder.
+11. The ```main.scss``` file where everything is imported together for the build.
 
-12. The ```main.scss``` file where everything is imported together for the build.
+### JavaScript folder
 
-13. Top level JavaScript folder
+```
+|-- /js [1]
+|  |-- /base [2]
+|  |  |-- /services [3]
+|  |  `-- /utilities [4]
+|  |-- /modules [5]
+|  |-- /platform [6]
+|  |-- include.js [7]
+|  `-- require.config.js [8]
+```
 
-14. Base JavaScript folder - Generic JavaScript parts.
+1. Top level JavaScript folder
 
-15. Base modules folder - Modules that are not platform specific and can be reused in other projects. Also used for the Redhotminute Base modules.
+2. Base JavaScript folder - Generic JavaScript parts.
 
-16. Base utilities folder - Utilities that are not platform specific and can be reused in other projects. Also used for the Redhotminute Base utilities.
+3. Services folder - Pieces of JavaScript that allow interaction with a web service.
 
-17. Platform JavaScript folder - Platform specific JavaScript parts.
+4. Utilities folder - Pieces of JavaScript that perform common, often re-used functions.
 
-18. Platform modules folder - Modules that are platform specific and cannot be reused in other projects.
+5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't introduce any platform specific logic.
 
-19. Platform utilities folder - Utilities that are platform specific and cannot be reused in other projects.
+6. Platform JavaScript folder - pieces of JavaScript logic that are very specific to the project being created. Will call specific modules and tie pieces of code together to form components and the interaction between them.
 
-20. The ```include.js``` file - The entry point for the RequireJS build, the starting point of the dependency tree.
+7. The ```include.js``` file - The entry point for the RequireJS build, the starting point of the dependency tree. Will tie pieces of code from the platform folder together.
 
-21. The ```require.config.js``` file - RequireJS configurations, [more information can be found here](http://requirejs.org/docs/api.html#config).
+8. The ```require.config.js``` file - RequireJS configurations, [more information can be found here](http://requirejs.org/docs/api.html#config).
