@@ -1,8 +1,9 @@
-module.exports = function task(gulp, plugins, config) {
+module.exports = function javascriptTask(gulp, plugins, config) {
+	'use strict';
+
 	var path = config.js.path,
 		lintTask = 'js:lint',
-		buildTask = 'js:build',
-		jsGlob = '**/*.js';
+		buildTask = 'js:build';
 
 	/**
 	 * Run the JavaScript build
@@ -12,37 +13,29 @@ module.exports = function task(gulp, plugins, config) {
 	 * - The minified version of this above mentioned bundle
 	 * - Source maps to be able to navigate the bundle properly
 	 */
-	function buildJs(taskDone) {
+	function build(taskDone) {
 		gulp.src(path.main)
 			// Pipe it through plumber to resolve errors
 			.pipe(plugins.plumber())
 			// Use rjs to bundle AMD modules
 			.pipe(plugins.requirejsOptimize(config.params.requirejs))
-			// Write minified files
+			// Write JS bundle file
 			.pipe(gulp.dest(path.dest))
-			// Initialize source maps
-			.pipe(plugins.sourcemaps.init())
-			// Write source maps
-			.pipe(plugins.sourcemaps.write('.'))
-			// Write CSS files and source map files
-			.pipe(gulp.dest(path.dest))
-				// Filter CSS files from the stream
-				.pipe(plugins.filter(jsGlob))
-				// Minify the filtered JS files
+				// Minify this JS file
 				.pipe(plugins.uglify())
-				// Rename these JS files to .min.js
+				// Rename minified JS file to .min.js
 				.pipe(plugins.rename(config.params.rename))
-				// Write minified files
+				// Write files to destination
 				.pipe(gulp.dest(path.dest))
 				.on('end', taskDone);
 	}
 
-	gulp.task(buildTask, buildJs);
+	gulp.task(buildTask, build);
 
 	/**
 	 * Lint all JavaScript source files
 	 */
-	function lintJs() {
+	function lint() {
 		gulp.src(path.src)
 			// eslint() attaches the lint output to the "eslint" property
 			// of the file object so it can be used by other modules.
@@ -52,17 +45,17 @@ module.exports = function task(gulp, plugins, config) {
 			.pipe(plugins.eslint.formatEach());
 	}
 
-	gulp.task(lintTask, lintJs);
+	gulp.task(lintTask, lint);
 
 	/**
 	 * Combine all JavaScript tasks as the main task
 	 */
-	function build() {
+	function task() {
 		plugins.runSequence(
 			lintTask,
 			buildTask
 		);
 	}
 
-	plugins.taskManager.addTask('js', path.src, path.dest, build);
+	plugins.taskManager.addTask('js', path.src, path.dest, task);
 };
