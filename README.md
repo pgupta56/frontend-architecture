@@ -6,6 +6,28 @@
 
 ## Architecture
 
+## Build folder
+
+```
+|-- /build [1]
+|  |-- /tasks [2]
+|  |-- /plugins [3]
+|  `-- config.js [4]
+```
+
+1. Top level build folder, used to store all Gulp build related files
+
+2. A folder where all individual tasks are stored. Ideally, the file name corresponds with the name of the task being provided inside.
+
+3. Plugins folder where we can store common, often re-used bits of functionality.
+
+4. The configuration file where all paths and plugin configurations are stored.
+
+### Build information
+We use a tag manager plugin to easily add commonly wanted features behind the scenes instantly. If we use the 'addTask()' method to define a new task, providing the ```task name```, ```src```, ```dest```, and ```callback``` (being the actual functionality). It will automatically add a clean, watch and the actual taks itself to the build.
+
+By using Nodejs its module.exports pattern to make the task available to the rest of the build and allow the task manager to bootstrap the entire build inside the Gulpfile. We use a custom pattern to require the entire ```task/``` directory since the require-dir plugin does not allow passing parameters. The Gulpfile will then define the default task and provide any extra information. This is generally a gulp instance called ```gulp```, a plugins object referenced as ```plugins``` where all Node modules are stored, and a set of configurations coming from the config.js file in the root referenced as ```config```. All of these are being exposed in the order they are explained to each task as parameter.
+
 ### CSS folder
 
 ```
