@@ -1,2 +1,2 @@
 # Utilities
-Defines a set of methods that perform common, often re-used functions.
+Pieces of JavaScript that perform common, often re-used functions
