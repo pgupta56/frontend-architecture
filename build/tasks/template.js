@@ -1,4 +1,6 @@
 module.exports = function task(gulp, plugins, config) {
+	'use strict';
+
 	var path = config.template.path;
 
 	/**

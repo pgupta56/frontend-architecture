@@ -1,14 +1,16 @@
 module.exports = function task(gulp, plugins, config) {
-    var path = config.font.path;
+	'use strict';
 
-    /**
-     * Run the CSS build
-     */
-    function build() {
-        return gulp
-                .src(path.src)
-                .pipe(gulp.dest(path.dest));
-    }
+	var path = config.font.path;
 
-    plugins.taskManager.addTask('font', path.src, path.dest, build);
+	/**
+	 * Run the CSS build
+	 */
+	function build() {
+		return gulp
+				.src(path.src)
+				.pipe(gulp.dest(path.dest));
+	}
+
+	plugins.taskManager.addTask('font', path.src, path.dest, build);
 };
