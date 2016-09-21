@@ -1,5 +1,5 @@
 /**
- * Build configuration file for ZalenPlanner Valk app
+ * Build configuration file
  */
 var base = {
 	dest: '../dist',
