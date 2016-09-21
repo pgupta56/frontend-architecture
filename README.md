@@ -65,9 +65,9 @@
 
 4. Utilities folder - Pieces of JavaScript that perform common, often re-used functions.
 
-5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't necessarily introduce any platform specific logic.
+5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't necessarily introduce any platform specific logic. These modules expose an API to interact with them and will be tied together in the platform folder, to make them interact with other modules and features of the platform.
 
-6. Platform JavaScript folder - pieces of JavaScript logic that are very specific to the project being created. Will call specific modules and tie pieces of code together to form components and the interaction between them.
+6. Platform JavaScript folder - pieces of JavaScript logic that are very specific to the project being created. Will call specific modules and tie pieces of code together to form components and the interaction between them. Modules shouldn't have relationships to other modules, otherwise they are too tightly coupled and changes are a large risk. In stead, we perform these interaction between the modules in the platform folder to form actual usable pieces of code and the way they are executed.
 
 7. The ```include.js``` file - The entry point for the RequireJS build, the starting point of the dependency tree. Will tie pieces of code from the platform folder together.
 
