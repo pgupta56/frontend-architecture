@@ -10,15 +10,15 @@
 
 ```
 |-- /css [1]
-|  |-- settings [2]
-|  |-- tools [3]
-|  |-- generic [4]
-|  |-- elements [5]
-|  |-- objects [6]
-|  |-- components [7]
-|  |-- utilities [8]
-|  |  |-- functions [9]
-|  |  `-- mixins [10]
+|  |-- /1-settings [2]
+|  |-- /2-tools [3]
+|  |-- /3-generic [4]
+|  |-- /4-elements [5]
+|  |-- /5-objects [6]
+|  |-- /6-components [7]
+|  |-- /7-utilities [8]
+|  |  |-- /functions [9]
+|  |  `-- /mixins [10]
 |  `-- main.scss [11]
 ```
 
