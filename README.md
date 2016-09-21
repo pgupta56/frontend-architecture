@@ -24,7 +24,7 @@
 4. The configuration file where all paths and plugin configurations are stored.
 
 ### Build information
-We use a tag manager plugin to easily add commonly wanted features behind the scenes instantly. If we use the 'addTask()' method to define a new task, providing the ```task name```, ```src```, ```dest```, and ```callback``` (being the actual functionality). It will automatically add a clean, watch and the actual taks itself to the build.
+We use a tag manager plugin to easily add commonly wanted features behind the scenes instantly. If we use the ```addTask()``` method to define a new task, providing the ```task name```, ```src```, ```dest```, and ```callback``` (being the actual functionality). It will automatically add a clean, watch and the actual taks itself to the build.
 
 By using Nodejs its module.exports pattern to make the task available to the rest of the build and allow the task manager to bootstrap the entire build inside the Gulpfile. We use a custom pattern to require the entire ```task/``` directory since the require-dir plugin does not allow passing parameters. The Gulpfile will then define the default task and provide any extra information. This is generally a gulp instance called ```gulp```, a plugins object referenced as ```plugins``` where all Node modules are stored, and a set of configurations coming from the config.js file in the root referenced as ```config```. All of these are being exposed in the order they are explained to each task as parameter.
 
