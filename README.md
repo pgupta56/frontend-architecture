@@ -65,7 +65,7 @@
 
 4. Utilities folder - Pieces of JavaScript that perform common, often re-used functions.
 
-5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't introduce any platform specific logic.
+5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't necessarily introduce any platform specific logic.
 
 6. Platform JavaScript folder - pieces of JavaScript logic that are very specific to the project being created. Will call specific modules and tie pieces of code together to form components and the interaction between them.
 
