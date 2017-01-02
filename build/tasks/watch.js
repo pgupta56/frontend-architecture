@@ -2,7 +2,7 @@ module.exports = function watchTask(gulp, plugins, config) {
 	'use strict';
 
 	return gulp.task(
-		'watch',
+		config.taskNames.watch,
 		plugins.taskManager.getWatchTasks()
 	);
 };

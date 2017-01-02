@@ -1,7 +1,8 @@
 module.exports = function task(gulp, plugins, config) {
 	'use strict';
 
-	var path = config.font.path;
+	var path = config.font.path,
+		taskName = config.taskNames.font;
 
 	/**
 	 * Run the CSS build
@@ -12,5 +13,5 @@ module.exports = function task(gulp, plugins, config) {
 				.pipe(gulp.dest(path.dest));
 	}
 
-	plugins.taskManager.addTask('font', path.src, path.dest, build);
+	plugins.taskManager.addTask(taskName, path.src, path.dest, build);
 };

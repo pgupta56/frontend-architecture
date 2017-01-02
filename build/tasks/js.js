@@ -2,6 +2,7 @@ module.exports = function javascriptTask(gulp, plugins, config) {
 	'use strict';
 
 	var path = config.js.path,
+		taskName = config.taskNames.js,
 		lintTask = 'js:lint',
 		buildTask = 'js:build';
 
@@ -57,5 +58,5 @@ module.exports = function javascriptTask(gulp, plugins, config) {
 		);
 	}
 
-	plugins.taskManager.addTask('js', path.src, path.dest, task);
+	plugins.taskManager.addTask(taskName, path.src, path.dest, task);
 };

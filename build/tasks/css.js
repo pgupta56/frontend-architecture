@@ -5,6 +5,7 @@ module.exports = function task(gulp, plugins, config) {
 		postCssOptions = [
 			plugins.autoprefixer(config.params.autoprefixer.browsers)
 		],
+		taskName = config.taskNames.css,
 		glob = '**/*.css';
 
 	/**
@@ -40,5 +41,5 @@ module.exports = function task(gulp, plugins, config) {
 				.pipe(gulp.dest(path.dest));
 	}
 
-	plugins.taskManager.addTask('css', path.src, path.dest, build);
+	plugins.taskManager.addTask(taskName, path.src, path.dest, build);
 };

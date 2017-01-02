@@ -54,12 +54,12 @@ plugins.taskManager
 gulp.task(
 	'default',
 	[
-		'clean',
-		'css',
-		'font',
-		'img',
-		'js',
-		'template'
+		config.taskNames.clean,
+		config.taskNames.css,
+		config.taskNames.font,
+		config.taskNames.img,
+		config.taskNames.js,
+		config.taskNames.template
 	]
 );
 
