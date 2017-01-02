@@ -1,11 +1,31 @@
-/**
- * Build configuration file
+/*
+ |--------------------------------------------------------------------------
+ | Build configuration file
+ |--------------------------------------------------------------------------
+ |
+ | Manages file paths, plugin settings and other build related settings.
+ | Also makes sure some magic strings are filtered from the build.
+ |
  */
+
 var base = {
-	dest: '../dist',
-	src: './src',
-	root: './'
-};
+		dest: '../dist',
+		src: './src',
+		root: './'
+	},
+	/**
+	 * Lookup table with task names
+	 * @type {Object}
+	 */
+	taskNames = {
+		clean: 'clean',
+		css: 'css',
+		font: 'font',
+		img: 'img',
+		js: 'js',
+		template: 'template',
+		watch: 'watch'
+	};
 
 module.exports = {
 	base: base,
@@ -35,6 +55,7 @@ module.exports = {
 			src: base.src + '/img/**/*.{svg,png,jpg,jpeg,gif}'
 		}
 	},
+	taskNames: taskNames,
 	template: {
 		path: {
 			dest: base.dest + '/template',

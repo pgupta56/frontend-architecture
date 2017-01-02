@@ -1,7 +1,8 @@
 module.exports = function task(gulp, plugins, config) {
 	'use strict';
 
-	var path = config.img.path;
+	var path = config.img.path,
+		taskName = config.taskNames.img;
 
 	/**
 	 * Run the CSS build
@@ -17,5 +18,5 @@ module.exports = function task(gulp, plugins, config) {
 				.pipe(gulp.dest(path.dest));
 	}
 
-	plugins.taskManager.addTask('img', path.src, path.dest, build);
+	plugins.taskManager.addTask(taskName, path.src, path.dest, build);
 };
