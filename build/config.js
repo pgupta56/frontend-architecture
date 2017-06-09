@@ -64,25 +64,25 @@ module.exports = {
 		}
 	},
 	params: {
+		autoprefixer: {
+			browsers: ['last 1 version', '> 5%']
+		},
+		babelify: {
+			presets: ['es2015']
+		},
+		browserify: {
+			paths: ['./Src/Js/'],
+			entries: './Src/Js/main.js'
+		},
 		eslint: {
 			configFile: base.root + '/.eslintrc'
 		},
 		rename: {
 			suffix: '.min'
 		},
-		autoprefixer: {
-			browsers: ['last 1 version', '> 5%']
-		},
-		requirejs: {
-			baseUrl: base.src + '/js',
-			generateSourceMaps: false,
-			include: ['include'],
-			insertRequire: ['include'],
-			mainConfigFile: base.src + '/js/require.config.js',
-			name: '../vendor/almond/almond',
-			optimize: 'none',
-			out: 'main.js',
-			preserveLicenseComments: false
+		stripCode: {
+			start_comment: 'DEV-ONLY',
+			end_comment: 'END-DEV-ONLY'
 		}
 	}
 };
