@@ -10,13 +10,18 @@ var _ = require('lodash'),
 		{
 			// Additional plugins not starting with "gulp-"
 			autoprefixer: require('autoprefixer'),
+			babelify: require('babelify'),
+			browserify: require('browserify'),
+			imageSize: require('image-size'),
 			lodash: _,
-			path: require('path'),
 			runSequence: require('run-sequence'),
+			vinylBuffer: require('vinyl-buffer'),
+			vinylSourceStream: require('vinyl-source-stream'),
+
 			// Internal project plugins
-			cleaner: require(buildFolder + '/plugins/cleaner'),
-			taskManager: require(buildFolder + '/plugins/task-manager'),
-			watcher: require(buildFolder + '/plugins/watcher')
+			cleaner: require(buildFolder + '/Plugins/cleaner'),
+			taskManager: require(buildFolder + '/Plugins/task-manager'),
+			watcher: require(buildFolder + '/Plugins/watcher')
 		}
 	),
 	config = require(buildFolder + '/config'),
@@ -62,4 +67,3 @@ gulp.task(
 		config.taskNames.template
 	]
 );
-

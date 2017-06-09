@@ -10,11 +10,7 @@ module.exports = function task(gulp, plugins, config) {
 	function build() {
 		return gulp
 				.src(path.src)
-				// Find the files that are changed since our last build
-				.pipe(plugins.changed(path.dest))
-				// Run imagemin to smush these files to save space
-				.pipe(plugins.imagemin())
-				// Save the optimized files
+				// Just a regular copy
 				.pipe(gulp.dest(path.dest));
 	}
 
