@@ -1,10 +1,30 @@
 module.exports = function javascriptTask(gulp, plugins, config) {
-	'use strict';
-
 	var path = config.js.path,
 		taskName = config.taskNames.js,
 		lintTask = 'js:lint',
-		buildTask = 'js:build';
+		buildTask = 'js:build',
+		buildProductionTask = buildTask + ':production';
+
+	/**
+	 * Run the JavaScript build for production
+	 *
+	 * Picks up the already built JS file
+	 * And applies some required computations to make it production ready.
+	 */
+	function buildProduction(taskDone) {
+		gulp.src(path.destFile)
+			// Strip any code that is only applicable on DEV
+			.pipe(plugins.stripCode(config.params.stripCode))
+			// Minify this JS file
+			.pipe(plugins.uglify())
+			// And rename them to .min.js
+			.pipe(plugins.rename(config.params.rename))
+			// Write the minified file to this destination aswell
+			.pipe(gulp.dest(path.dest))
+			.on('end', taskDone);
+	}
+
+	gulp.task(buildProductionTask, buildProduction);
 
 	/**
 	 * Run the JavaScript build
@@ -15,20 +35,25 @@ module.exports = function javascriptTask(gulp, plugins, config) {
 	 * - Source maps to be able to navigate the bundle properly
 	 */
 	function build(taskDone) {
-		gulp.src(path.main)
-			// Pipe it through plumber to resolve errors
-			.pipe(plugins.plumber())
-			// Use rjs to bundle AMD modules
-			.pipe(plugins.requirejsOptimize(config.params.requirejs))
-			// Write JS bundle file
+		// Initialize browserify
+		plugins.browserify(config.params.browserify)
+			// Make sure we babelify to create ES5 code from ES6 code
+			.transform(plugins.babelify, config.params.babelify)
+			// Bundle the entire dependency tree together
+			.bundle()
+			.on('error', console.log)
+			// We need to get a vinyl source stream
+			// since gulp works with streams, otherwise we can't
+			// use our other packages
+			.pipe(plugins.vinylSourceStream(path.main))
+			.pipe(plugins.vinylBuffer())
+			// Initialize source maps
+			.pipe(plugins.sourcemaps.init())
+			// Write sourcemaps for this file
+			.pipe(plugins.sourcemaps.write('.'))
+			// Write the minified file to this destination aswell
 			.pipe(gulp.dest(path.dest))
-				// Minify this JS file
-				.pipe(plugins.uglify())
-				// Rename minified JS file to .min.js
-				.pipe(plugins.rename(config.params.rename))
-				// Write files to destination
-				.pipe(gulp.dest(path.dest))
-				.on('end', taskDone);
+			.on('end', taskDone);
 	}
 
 	gulp.task(buildTask, build);
@@ -37,7 +62,7 @@ module.exports = function javascriptTask(gulp, plugins, config) {
 	 * Lint all JavaScript source files
 	 */
 	function lint() {
-		gulp.src(path.src)
+		return gulp.src(path.src)
 			// eslint() attaches the lint output to the "eslint" property
 			// of the file object so it can be used by other modules.
 			.pipe(plugins.eslint(config.params.eslint))
@@ -51,10 +76,16 @@ module.exports = function javascriptTask(gulp, plugins, config) {
 	/**
 	 * Combine all JavaScript tasks as the main task
 	 */
-	function task() {
+	function task(callback) {
+		// We run the build task before the lint task. This has the benefit of
+		// not having to wait for the linter before the JS is build and you can
+		// refresh the site in your browser. This saves on average about 5s of
+		// waiting per build.
 		plugins.runSequence(
+			buildTask,
 			lintTask,
-			buildTask
+			buildProductionTask,
+			callback
 		);
 	}
 

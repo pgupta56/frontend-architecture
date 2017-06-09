@@ -45,7 +45,8 @@ module.exports = {
 	js: {
 		path: {
 			dest: base.dest + '/js',
-			main: base.src + '/js/include.js',
+			destFile: base.dest + '/js/main.js',
+			main: 'main.js',
 			src: base.src + '/js/**/*.js'
 		}
 	},

@@ -1,6 +1,4 @@
 module.exports = function task(gulp, plugins, config) {
-	'use strict';
-
 	var path = config.css.path,
 		postCssOptions = [
 			plugins.autoprefixer(config.params.autoprefixer.browsers)
@@ -17,28 +15,41 @@ module.exports = function task(gulp, plugins, config) {
 	 * - Source maps to be able to navigate our code
 	 */
 	function build() {
-		gulp.src(path.src)
-			// Initialize source maps
-			.pipe(plugins.sourcemaps.init())
+		var normal = gulp.src(path.src)
 			// Build the sass
 			.pipe(plugins.sass().on('error', plugins.sass.logError))
 			// Run any PostCSS actions
 			// autoprefixer in our case
 			.pipe(plugins.postcss(postCssOptions))
-			// Write source maps
-			.pipe(plugins.sourcemaps.write('.'))
+			// Filter CSS files from the stream
+			.pipe(plugins.filter(glob))
 			// Write CSS files and source map files
-			.pipe(gulp.dest(path.dest))
-				// Filter CSS files from the stream
-				.pipe(plugins.filter(glob))
-				// Minify these CSS files
-				// creating a second,
-				// minified variant of our compiled file
-				.pipe(plugins.minifyCss())
-				// Rename these CSS files to .min.css
-				.pipe(plugins.rename(config.params.rename))
-				// Write minified files
-				.pipe(gulp.dest(path.dest));
+			.pipe(gulp.dest(path.dest));
+
+		var minified = gulp.src(path.src)
+			// Build the sass
+			.pipe(plugins.sass().on('error', plugins.sass.logError))
+			// Run any PostCSS actions
+			// autoprefixer in our case
+			.pipe(plugins.postcss(postCssOptions))
+			// Filter CSS files from the stream
+			.pipe(plugins.filter(glob))
+			// Minify these CSS files
+			// creating a second,
+			// minified variant of our compiled file
+			.pipe(plugins.cleanCss(
+				{ debug: true },
+				function cleanCss(details) {
+					console.log('original css size: ' + details.name + ' ' + details.stats.originalSize);
+					console.log('minified css size: ' + details.name + ' ' + details.stats.minifiedSize);
+				}
+			))
+			// Rename these CSS files to .min.css
+			.pipe(plugins.rename(config.params.rename))
+			// Write minified files
+			.pipe(gulp.dest(path.dest));
+
+		return (normal, minified);
 	}
 
 	plugins.taskManager.addTask(taskName, path.src, path.dest, build);
