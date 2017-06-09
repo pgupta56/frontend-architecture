@@ -31,7 +31,7 @@ Finally, the Gulpfile defines the ```default``` task. If preferred, we can also 
 
 To run Gulp use the command ```npm run gulp <task>```
 
-### CSS folder
+### ITCSS
 
 ```
 |-- /css [1]
@@ -69,31 +69,27 @@ To run Gulp use the command ```npm run gulp <task>```
 
 11. The ```main.scss``` file where everything is imported together for the build.
 
-### JavaScript folder
+### ITJS
 
 ```
-|-- /js [1]
-|  |-- /base [2]
-|  |  |-- /services [3]
-|  |  `-- /utilities [4]
+|-- /js
+|  |-- /polyfills [1]
+|  |-- /vendor [2]
+|  |-- /utilities [3]
+|  |-- /endpoints [4]
 |  |-- /modules [5]
 |  |-- /platform [6]
-|  |-- include.js [7]
-|  `-- require.config.js [8]
+|  |-- main.js
 ```
 
-1. Top level JavaScript folder
+1. ITJS layer 1: ```polyfills``` - Provide modern functionality on older browsers that do not natively support it. For example a polyfill could be used to mimic the functionality of an HTML Canvas element on Microsoft Internet Explorer 7 using a Silverlight plugin, or mimic support for CSS rem units, or text-shadow, or whatever you want.
 
-2. Base JavaScript folder - Generic JavaScript parts.
+2. ITJS layer 2: ```vendor``` - 3rd party code that is not available through npm, we copy it in to this folder so we can reference it.
 
-3. Services folder - Pieces of JavaScript that allow interaction with a web service.
+3. ITJS layer 3: ```utilities``` - Common, often reused functions which can be used in multiple pieces of code/layers. Can also be used for complex code that is better left abstracted from UI code.
 
-4. Utilities folder - Pieces of JavaScript that perform common, often re-used functions.
+4. ITJS layer 4: ```endpoints``` - All web services wrapped in a convenient manner. So we keep the logic and data used to communicate with endpoints consistent and clear.
 
-5. Modules folder - Pieces of JavaScript that allow for UI/page interactions, but don't necessarily introduce any platform specific logic. These modules expose an API to interact with them and will be tied together in the platform folder, to make them interact with other modules and features of the platform.
+5. ITJS layer 5: ```modules``` - Self contained component, frequently one that is interchangeable with others, for assembly into units of differing size, complexity, or function. Can have a public API and/or has the ability to call itself based on a set of elements from the DOM.
 
-6. Platform JavaScript folder - pieces of JavaScript logic that are very specific to the project being created. Will call specific modules and tie pieces of code together to form components and the interaction between them. Modules shouldn't have relationships to other modules, otherwise they are too tightly coupled and changes are a large risk. In stead, we perform these interaction between the modules in the platform folder to form actual usable pieces of code and the way they are executed.
-
-7. The ```include.js``` file - The entry point for the RequireJS build, the starting point of the dependency tree. Will tie pieces of code from the platform folder together.
-
-8. The ```require.config.js``` file - RequireJS configurations, [more information can be found here](http://requirejs.org/docs/api.html#config).
+6. ITJS layer 6: ```platform``` - The final layer, this is where platform specific logic comes into play. Every platform has pieces of code that are tied together with rules from the business or UX patterns that are uncommon but used for a very apparent reason. All these examples are inside this folder. It is possible to separate everything inside this folder into their own folders and you can pick and choose which folders best fit your case.
